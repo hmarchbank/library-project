@@ -1,67 +1,73 @@
 const Book = require('../models/Book.model')
+const Author= require('../models/Author.model')
 const router = require('express').Router()
 
 
-router.get('/books', (req, res, next) => {
+router.get('/', (req, res, next) => {
     Book.find()
-    .then(booksArray => {
-        res.render("books/books-list.hbs", {books: booksArray})
-    })
-    .catch( err => {
-        console.log(err)
-        next(err)
-    })
+        .populate("author")
+        .then(booksArray => {
+            res.render("books/books-list.hbs", { books: booksArray })
+        })
+        .catch(err => {
+            console.log(err)
+            next(err)
+        })
 })
 
-router.get("/books/book-create", (req, res, next) => {
-    res.render("books/book-create")
+router.get("/book-create", (req, res, next) => {
+    Author.find()
+    // populate('author')
+    .then(authorArray =>{
+        console.log(authorArray)
+        res.render("books/book-create", {authorArray})
+        })
 })
 
-router.post('/books/create', (req, res, next) => {
+router.post('/create', (req, res, next) => {
     const newBook = {
-    title: req.body.title,
-    description: req.body.description,
-    author: req.body.author,
-    rating: req.body.rating
-}
+        title: req.body.title,
+        description: req.body.description,
+        author: req.body.author,
+        rating: req.body.rating
+    }
     Book.create(newBook)
-    .then( () =>{
-        res.redirect("/books")
-    })
-    .catch(err => {
-        console.log(err)
-        next(err)
-    })
+        .then(() => {
+            res.redirect("/books")
+        })
+        .catch(err => {
+            console.log(err)
+            next(err)
+        })
 })
 
 
-router.get('/books/:bookId', (req, res, next) => {
-    const id = req.params.bookId
-    console.log(id)
-    Book.findById(id)
-    .then( bookDetails =>{
-        res.render("books/book-details.hbs", {book: bookDetails})
-        console.log(bookDetails)
-    })
-    .catch(err => {
-        console.log(err)
-        next(err)
-    })
-})
-
-router.get('/books/:bookId/edit', (req, res, next) => {
+router.get('/:bookId', (req, res, next) => {
     const id = req.params.bookId
     Book.findById(id)
-    .then(book => {
-        res.render("books/book-edit.hbs", {book})
-    })
-    .catch(err => {
-        console.log(err)
-        next(err)
-    })
+        .populate("author")
+        .then(bookDetails => {
+            res.render("books/book-details.hbs", { book: bookDetails })
+        })
+        .catch(err => {
+            console.log(err)
+            next(err)
+        })
 })
 
-router.post('/books/:bookId/edit', (req, res, next) => {
+router.get('/:bookId/edit', (req, res, next) => {
+    const id = req.params.bookId
+    Book.findById(id)
+        .then(book => {
+            res.render("books/book-edit.hbs", { book })
+        })
+        .catch(err => {
+            console.log(err)
+            next(err)
+        })
+})
+
+router.post('/:bookId/edit', (req, res, next) => {
     const newDetails = {
         title: req.body.title,
         author: req.body.author,
@@ -70,30 +76,28 @@ router.post('/books/:bookId/edit', (req, res, next) => {
     }
 
     const id = req.params.bookId
-    console.log(req.params)
     Book.findByIdAndUpdate(id, newDetails)
-    .then(response => {
-        res.redirect(`/books/${response._id}`)
-    })
-    .catch(err => {
-        console.log("error updating book", err)
-        next(err)
-    })
+        .then(response => {
+            res.redirect(`/books/${response._id}`)
+        })
+        .catch(err => {
+            console.log("error updating book", err)
+            next(err)
+        })
 })
 
-router.post("/books/:bookId/delete", (req, res, next) => {
+router.post("/:bookId/delete?", (req, res, next) => {
     console.log(req.params)
-    const id = req.params.bookdId
+    const id = req.params.bookId
+    console.log(id)
     Book.findByIdAndRemove(id)
-    .then( res => {
-        res.redirect('/books')
-    })
-    .catch( err => {
-        console.log("error deleting book",err)
-        next(err)
-    })
+        .then(() => {
+            res.redirect('/books')
+        })
+        .catch(err => {
+            console.log("error deleting book", err)
+            next(err)
+        })
 })
-
-
 
 module.exports = router

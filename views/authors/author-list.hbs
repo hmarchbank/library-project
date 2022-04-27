@@ -1,0 +1,11 @@
+<h1>List of Authors in our database:</h1>
+
+{{#each authors}}
+    <section class="book-summary">
+        <h2>{{this.name}}</h2>
+        <p>
+            {{this.name}} is from {{this.country}}. Their favourite food is {{this.favouriteFood}}
+        </p>
+    <a href="/authors/{{this._id}}/edit" method="get">Edit author</a>
+    </section>
+{{/each}}

@@ -5,13 +5,22 @@
     <input type="text" name="title" />
   </label>
 
-  <label> Author:
-    <input type="text" name="author" />
+  <br>
+  <label> Author:<br>
+    <select name="author">
+      {{#each authorArray}}
+  
+      <option name="author"value="{{this._id}}">{{this.name}}</option>
+  
+      {{/each}}
+    </select>
   </label>
+      <br>
 
   <label> Description:
     <textarea name="description" cols="30" rows="4"> </textarea>
   </label>
+  <br>
 
   <label> Rating:
     <input type="number" name="rating" min="1" max="10" />

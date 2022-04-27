@@ -1,0 +1,17 @@
+<h2>Edit the author: {{author.name}}</h2>
+
+<form action="/authors/{{author._id}}/edit" method="POST">
+    <label> Name:
+        <input type="text" name="title" value="{{author.name}}" />
+    </label>
+
+    <label> Favourite Food:
+        <input type="text" name="favouriteFood" value="{{author.favouriteFood}}" />
+    </label>
+    
+    <label> Country:
+        <input type="text" name="country" value="{{author.country}}" />
+    </label>
+
+    <button type="submit">Edit</button>
+</form>

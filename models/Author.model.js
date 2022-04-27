@@ -1,11 +1,11 @@
 
 const {Schema, model} = require('mongoose')
 
-const authorSchema = new Schema (
+const authorSchema = new Schema(
     {
         name: String,
-        age: Number,
-        Country: String,
+        favouriteFood: String,
+        country: String,
     }
 )
 
