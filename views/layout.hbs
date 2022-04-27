@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>{{appTitle}}</title>
-      <link rel="stylesheet" href="/stylesheets/style.css" />
-   </head>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>{{appTitle}}</title>
+   <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
 
-   <body>
+<body>
    <nav>
       <ul>
-         <li><a href="/">Home</a></li>
-         <li><a href="/books">Book List</a></li>
-         <li><a href="/books/book-create">Create Book</a></li>
-         <li><a href="/authors/">Author List</a></li>
-         <li><a href="/authors/author-create">Create Author</a></li>
+         <div class="flex">
+            <li><a href="/">Home</a></li>
+            <li><a href="/books">Book List</a></li>
+            <li><a href="/books/book-create">Create Book</a></li>
+            <li><a href="/authors/">Author List</a></li>
+            <li><a href="/authors/author-create">Create Author</a></li>
+         </div>
+
+         <div class="flex">
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register Account</a></li>
+         </div>
       </ul>
    </nav>
-   
+
    <main>
       {{{body}}}
-   
+
    </main>
 
    <script src="/js/script.js"></script>
-   </body>
+</body>
 
 </html>

@@ -33,6 +33,7 @@ nav{
 
 nav ul{
   display: flex;
+  justify-content: space-between;
   margin: 0;
 }
 
@@ -46,6 +47,16 @@ nav li, nav a{
 
 nav a:hover {
   text-decoration: underline;
+}
+
+.flex{
+  display: flex;
+}
+
+.error{
+  padding: 1rem;
+  background-color: red;
+  width: 20%;
 }
 
 

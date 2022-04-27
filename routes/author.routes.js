@@ -54,7 +54,7 @@ router.post('/:authorId/edit', (req, res, next) => {
     const id = req.params.authorId
     Author.findByIdAndUpdate(id, newDetails)
         .then(response => {
-            res.redirect(`/authors`)
+            res.redirect(`/a`)
         })
         .catch(err => {
             console.log("error updating book", err)
