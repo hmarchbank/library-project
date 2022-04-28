@@ -45,8 +45,18 @@ nav li, nav a{
   list-style: none;
 }
 
-nav a:hover {
+nav a:hover, nav button:hover {
+  cursor: pointer;
   text-decoration: underline;
+}
+
+nav button {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif; 
+  font-size: 1.5rem;
+  color: black;
+  border: none;
+  margin: 0.9rem;
+  background: #ddd;
 }
 
 .flex{

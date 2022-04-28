@@ -1,6 +1,6 @@
 <h1>Profile page</h1>
 
-<h2>Welcome to your profile page: {{user.email}}</h2>
+<h2>Welcome to your profile page: {{session.currentUser.email}}</h2>
 
 <form action="/logout" method="POST">
     <button type="submit">Logout</button>

@@ -21,15 +21,25 @@
          </div>
 
          <div class="flex">
+
+            {{#if session.currentUser}}
+
+            <li><a href="/profile-page">Profile Page</a></li>
+            <form action="/logout" method="POST">
+               <button type="submit">Logout</button>
+            </form>
+            
+            {{else}}
+
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register Account</a></li>
+            {{/if}}
          </div>
       </ul>
    </nav>
 
    <main>
       {{{body}}}
-
    </main>
 
    <script src="/js/script.js"></script>

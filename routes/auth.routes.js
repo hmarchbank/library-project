@@ -56,8 +56,8 @@ router.post('/login', (req, res, next) => {
             //login sucess
             req.session.currentUser = userFromDB
             res.render('auth/user-profile', {user: userFromDB})
-        } else {
-            res.redirect('/user-profile')
+        } else { 
+            res.render('auth/login', { errorMessage: "Wrong password"})
         }
     })
     .catch( error => {
@@ -73,7 +73,7 @@ router.post('/login', (req, res, next) => {
 router.get('/profile-page', (req, res, next)=>{
     console.log(req.session)
 
-    res.render('auth/user-profile', {user: req.session.currentUser})
+    res.render('auth/user-profile')
 })
 
 router.post('/logout', (req, res , next) => {

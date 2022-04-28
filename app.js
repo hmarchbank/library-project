@@ -12,6 +12,7 @@ const express = require("express");
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
+const {isLoggedIn, isLoggedOut} = require("./middleware/route-guard");
 
 const app = express();
 
@@ -26,12 +27,17 @@ const projectName = "library-project";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+app.use((req, res, next) => {
+    res.locals.session = req.session
+    next()
+})
+
 // 👇 Start handling routes here
 
 app.use("/", require("./routes/index.routes"))
+app.use('/', require('./routes/auth.routes'))
 app.use('/books', require("./routes/book.routes"))
 app.use('/authors', require('./routes/author.routes'))
-app.use('/', require('./routes/auth.routes'))
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

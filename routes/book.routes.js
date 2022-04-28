@@ -1,5 +1,6 @@
 const Book = require('../models/Book.model')
 const Author= require('../models/Author.model')
+const {isLoggedIn, isLoggedOut} = require('../middleware/route-guard')
 const router = require('express').Router()
 
 
@@ -15,7 +16,7 @@ router.get('/', (req, res, next) => {
         })
 })
 
-router.get("/book-create", (req, res, next) => {
+router.get("/book-create", isLoggedIn, (req, res, next) => {
     Author.find()
     // populate('author')
     .then(authorArray =>{
@@ -55,7 +56,7 @@ router.get('/:bookId', (req, res, next) => {
         })
 })
 
-router.get('/:bookId/edit', (req, res, next) => {
+router.get('/:bookId/edit', isLoggedIn, (req, res, next) => {
     const id = req.params.bookId
     Book.findById(id)
         .then(book => {
@@ -67,7 +68,7 @@ router.get('/:bookId/edit', (req, res, next) => {
         })
 })
 
-router.post('/:bookId/edit', (req, res, next) => {
+router.post('/:bookId/edit', isLoggedIn, (req, res, next) => {
     const newDetails = {
         title: req.body.title,
         author: req.body.author,
@@ -86,7 +87,7 @@ router.post('/:bookId/edit', (req, res, next) => {
         })
 })
 
-router.post("/:bookId/delete?", (req, res, next) => {
+router.post("/:bookId/delete?", isLoggedIn, (req, res, next) => {
     console.log(req.params)
     const id = req.params.bookId
     console.log(id)
