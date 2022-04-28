@@ -25,7 +25,9 @@ router.post('/signup', (req, res, next) => {
                 passwordHash: hash
             }
             User.create(userDetails)
-            res.render('index.hbs')
+        })
+        .then(userFromDb =>{
+            res.redirect('login')
         })
         .catch(error => {
             console.log("error creating account")
@@ -51,9 +53,11 @@ router.post('/login', (req, res, next) => {
         if(!userFromDB){
             res.render('auth/login', { errorMessage: "Wrong credentials - we have no user with that email"})
         } else if(bcryptjs.compareSync(password, userFromDB.passwordHash)){
+            //login sucess
+            req.session.currentUser = userFromDB
             res.render('auth/user-profile', {user: userFromDB})
         } else {
-            res.render('auth/login', {errorMessage: 'Incorrect credentials'})
+            res.redirect('/user-profile')
         }
     })
     .catch( error => {
@@ -67,7 +71,18 @@ router.post('/login', (req, res, next) => {
 
 // PROFILE PAGE
 router.get('/profile-page', (req, res, next)=>{
-    res.render('auth/user-profile')
+    console.log(req.session)
+
+    res.render('auth/user-profile', {user: req.session.currentUser})
+})
+
+router.post('/logout', (req, res , next) => {
+    req.session.destroy( err => {
+        if(err){
+            next(err)
+        }
+        res.redirect("/")
+    })
 })
 
 module.exports = router
